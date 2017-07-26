@@ -38,7 +38,7 @@ export class ProgressbarComponent {
 	updateProgressText() {
 		switch (this._progressType) {
 			case "none" : this.progressText = ""; break;
-			case "percent" : this.progressText = this.width + " %"; break;
+			case "percent" : this.progressText = Math.round(this.width) + " %"; break;
 			case "value" : this.progressText = this._value + " / " + this._max; break;
 		}
 	}

@@ -8,6 +8,7 @@ progressbar {
 	> .progress {
 		transition: all .5s ease;
 		width: 0;
+		white-space: nowrap;
 		min-height: $progressbar-font-size;
 		font-size: $progressbar-font-size;
 		line-height: $progressbar-font-size;
@@ -17,7 +18,10 @@ progressbar {
 		justify-content: center;
 		align-items: center;
 
-
+		> div {
+			// min-width will prevent text when 0% to be cutted on the left
+			min-width: 0;
+		}
 	}
 
 	&.stripped > .progress {
