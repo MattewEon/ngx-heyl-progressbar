@@ -1,4 +1,5 @@
-import {Component, Input, ViewEncapsulation} from "@angular/core";
+import {Component, Input, ViewEncapsulation, HostBinding} from "@angular/core";
+import {DomSanitizer} from "@angular/platform-browser";
 export type ProgressType = "none" | "percent" | "value";
 
 @Component({
@@ -12,8 +13,14 @@ export class ProgressbarComponent {
 	private _max: number = 100;
 	private width: number = 0;
 
+	@HostBinding("style.background-size") backgroundSize: string = "10%";
+
 	private progressText: string = "";
 	private _progressType: ProgressType = "none";
+
+	constructor(private domSan: DomSanitizer) {
+
+	}
 
 	@Input() set value(value: number) {
 		this._value = value;
@@ -22,6 +29,11 @@ export class ProgressbarComponent {
 
 	@Input() set max(max: number) {
 		this._max = max;
+
+		let size = (100 / max);
+		while (size < 3) size *= 2;
+
+		this.backgroundSize = this.domSan.bypassSecurityTrustStyle(`calc(` + size + `% + 1px)`);
 		this.updateWidth();
 	}
 
