@@ -6,7 +6,7 @@ progressbar {
 	overflow: hidden;
 
 	> .progress {
-		transition: all .5s ease;
+		transition: all .8s ease;
 		width: 0;
 		white-space: nowrap;
 		min-height: $progressbar-font-size;
