@@ -1,5 +1,5 @@
 import {Component, Input, ViewEncapsulation, HostBinding} from "@angular/core";
-import {DomSanitizer} from "@angular/platform-browser";
+import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 export type ProgressType = "none" | "percent" | "value";
 
 @Component({
@@ -12,14 +12,16 @@ export class ProgressbarComponent {
 	private _value: number = 0;
 	private _max: number = 100;
 	private width: number = 0;
+	private _step: number = 4;
+	private autoStep: boolean = true;
 
-	@HostBinding("style.background-size") backgroundSize: string = "10%";
+	@HostBinding("style.background-size") backgroundSize: SafeStyle | string = "10%";
 
 	private progressText: string = "";
 	private _progressType: ProgressType = "none";
 
 	constructor(private domSan: DomSanitizer) {
-
+		this.setStep(this._step);
 	}
 
 	@Input() set value(value: number) {
@@ -30,16 +32,30 @@ export class ProgressbarComponent {
 	@Input() set max(max: number) {
 		this._max = max;
 
-		let size = (100 / max);
-		while (size < 3) size *= 2;
+		if (this.autoStep) {
+			this.setStep(this._max);
+		}
 
-		this.backgroundSize = this.domSan.bypassSecurityTrustStyle(`calc(` + size + `% + 1px)`);
 		this.updateWidth();
 	}
 
 	@Input() set progressType(progresType: ProgressType) {
 		this._progressType = progresType;
 		this.updateProgressText();
+	}
+
+	@Input() set step(value: number) {
+		this.setStep(value);
+	}
+
+	setStep(value: number) {
+		this.autoStep = false;
+		this._step = value;
+
+		let size = (100 / this._step);
+		while (size < 3) size *= 2;
+
+		this.backgroundSize = this.domSan.bypassSecurityTrustStyle(`calc(` + size + `% + 1px)`);
 	}
 
 	updateWidth() {
