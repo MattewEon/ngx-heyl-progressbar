@@ -46,10 +46,10 @@ export class ProgressbarComponent {
 
 	@Input() set step(value: number) {
 		this.setStep(value);
+		this.autoStep = false;
 	}
 
 	setStep(value: number) {
-		this.autoStep = false;
 		this._step = value;
 
 		let size = (100 / this._step);
