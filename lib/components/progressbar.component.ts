@@ -1,6 +1,6 @@
-import {Component, Input, ViewEncapsulation, HostBinding} from "@angular/core";
+import {Component, HostBinding, Input, ViewEncapsulation} from "@angular/core";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
-export type ProgressType = "none" | "percent" | "value";
+import {ProgressbarConfig, ProgressValue} from "./progressbar.config";
 
 @Component({
 	selector: "progressbar",
@@ -9,65 +9,97 @@ export type ProgressType = "none" | "percent" | "value";
 	encapsulation: ViewEncapsulation.None
 })
 export class ProgressbarComponent {
+	config: ProgressbarConfig = new ProgressbarConfig();
+
 	private _value: number = 0;
-	private _max: number = 100;
 	private width: number = 0;
-	private _step: number = 4;
-	private autoStep: boolean = true;
+
+	@Input() color1: number;
+	@Input() color2: number;
+	@Input() color3: number;
 
 	@HostBinding("style.background-size") backgroundSize: SafeStyle | string = "10%";
+	@HostBinding("class.default") colorClassDefault: boolean = true;
+	@HostBinding("class.color1") colorClass1: boolean = false;
+	@HostBinding("class.color2") colorClass2: boolean = false;
+	@HostBinding("class.color3") colorClass3: boolean = false;
 
 	private progressText: string = "";
-	private _progressType: ProgressType = "none";
 
 	constructor(private domSan: DomSanitizer) {
-		this.setStep(this._step);
+		this.updateStepSize();
+		this.color1 = 100;
+		this.color2 = 100;
+		this.color3 = 100;
 	}
 
-	@Input() set value(value: number) {
-		this._value = value;
+	@Input()
+	set setConfig(config: ProgressbarConfig) {
+		this.config = config;
 		this.updateWidth();
-	}
-
-	@Input() set max(max: number) {
-		this._max = max;
-
-		if (this.autoStep) {
-			this.setStep(this._max);
-		}
-
-		this.updateWidth();
-	}
-
-	@Input() set progressType(progresType: ProgressType) {
-		this._progressType = progresType;
+		this.updateStepSize();
 		this.updateProgressText();
 	}
 
-	@Input() set step(value: number) {
-		this.setStep(value);
-		this.autoStep = false;
+	@Input()
+	set value(value: number) {
+		this._value = value;
+		this.updateColorClass();
+		this.updateWidth();
 	}
 
-	setStep(value: number) {
-		this._step = value;
+	@Input()
+	set max(max: number) {
+		this.config.setMax(max);
+		this.updateStepSize();
+		this.updateWidth();
+	}
 
-		let size = (100 / this._step);
-		while (size < 3) size *= 2;
+	@Input()
+	set progressType(progresType: ProgressValue) {
+		this.config.setProgressType(progresType);
+		this.updateProgressText();
+	}
 
-		this.backgroundSize = this.domSan.bypassSecurityTrustStyle(`calc(` + size + `% + 1px)`);
+	@Input()
+	set step(value: number) {
+		this.config.setStep(value);
+		this.updateStepSize();
+	}
+
+	updateColorClass() {
+		this.colorClassDefault = false;
+		this.colorClass1 = false;
+		this.colorClass2 = false;
+		this.colorClass3 = false;
+
+		if (this.width > this.color3) this.colorClass3 = true;
+		else if (this.width > this.color2) this.colorClass2 = true;
+		else if (this.width > this.color1) this.colorClass1 = true;
+		else this.colorClassDefault = true;
+	}
+
+	updateStepSize() {
+		console.log(this.config.getStepSize());
+		this.backgroundSize = this.domSan.bypassSecurityTrustStyle(`calc(` + this.config.getStepSize() + `% + 1px)`);
 	}
 
 	updateWidth() {
-		this.width = (this._value / this._max) * 100;
+		this.width = (this._value / this.config.getMax()) * 100;
 		this.updateProgressText();
 	}
 
 	updateProgressText() {
-		switch (this._progressType) {
-			case "none" : this.progressText = ""; break;
-			case "percent" : this.progressText = Math.round(this.width) + " %"; break;
-			case "value" : this.progressText = this._value + " / " + this._max; break;
+		switch (this.config.getProgressType()) {
+			case "percent" :
+				this.progressText = Math.round(this.width) + " %";
+				break;
+			case "value" :
+				this.progressText = this._value + " / " + this.config.getMax();
+				break;
+			default :
+				this.progressText = "";
+				break;
 		}
 	}
 }

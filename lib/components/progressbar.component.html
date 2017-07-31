@@ -1,5 +1,6 @@
 <div class="progress" [style.width]="width + '%'">
-	<div>
+	<div *ngIf="config.getProgressType() != 'none'">
 		{{ progressText }}
+		<ng-content *ngIf="config.getProgressType() == 'ng-content'"></ng-content>
 	</div>
 </div>
