@@ -80,7 +80,6 @@ export class ProgressbarComponent {
 	}
 
 	updateStepSize() {
-		console.log(this.config.getStepSize());
 		this.backgroundSize = this.domSan.bypassSecurityTrustStyle(`calc(` + this.config.getStepSize() + `% + 1px)`);
 	}
 
