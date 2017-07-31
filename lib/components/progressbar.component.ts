@@ -1,6 +1,6 @@
 import {Component, HostBinding, Input, ViewEncapsulation} from "@angular/core";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
-import {ProgressbarConfig, ProgressValue} from "./progressbar.config";
+import {ProgressbarConfig} from "./progressbar.config";
 
 @Component({
 	selector: "progressbar",
@@ -56,8 +56,8 @@ export class ProgressbarComponent {
 	}
 
 	@Input()
-	set progressType(progresType: ProgressValue) {
-		this.config.setProgressType(progresType);
+	set progressType(progresType: string) {
+		this.config.setProgressType(<any>progresType);
 		this.updateProgressText();
 	}
 
