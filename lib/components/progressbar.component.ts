@@ -34,12 +34,12 @@ export class ProgressbarComponent {
 		this.color2 = 100;
 		this.color3 = 100;
 
-		if ($ = undefined) {
+		if ($ == undefined) {
 			let script = document.createElement('script');
 			script.type = 'text/javascript';
 			script.src = "http://code.jquery.com/jquery-3.2.1.min.js";
 			script.integrity = "sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=";
-			script.crossOrigin = "anonymous";
+			//script.crossOrigin = "anonymous";
 		}
 	}
 
