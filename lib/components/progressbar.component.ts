@@ -1,6 +1,8 @@
-import {Component, HostBinding, Input, ViewEncapsulation} from "@angular/core";
+import {Component, ElementRef, HostBinding, Input, ViewEncapsulation} from "@angular/core";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 import {ProgressbarConfig} from "./progressbar.config";
+
+declare var $: any;
 
 @Component({
 	selector: "progressbar",
@@ -26,11 +28,19 @@ export class ProgressbarComponent {
 
 	private progressText: string = "";
 
-	constructor(private domSan: DomSanitizer) {
+	constructor(private el: ElementRef, private domSan: DomSanitizer) {
 		this.updateStepSize();
 		this.color1 = 100;
 		this.color2 = 100;
 		this.color3 = 100;
+
+		if ($ = undefined) {
+			let script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src = "http://code.jquery.com/jquery-3.2.1.min.js";
+			script.integrity = "sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=";
+			script.crossOrigin = "anonymous";
+		}
 	}
 
 	@Input()
@@ -91,7 +101,15 @@ export class ProgressbarComponent {
 	updateProgressText() {
 		switch (this.config.getProgressType()) {
 			case "percent" :
-				this.progressText = Math.round(this.width) + " %";
+				this.progressText = Math.round(this.width) + "%";
+				break;
+			case "percent-progressive":
+				let i = setInterval(() => {
+					this.progressText = Math.round(this.getProgressPercentWidth()) + "%";
+				}, 50)
+				setTimeout(() => {
+					clearInterval(i);
+				}, 2000);
 				break;
 			case "value" :
 				this.progressText = this._value + " / " + this.config.getMax();
@@ -101,4 +119,9 @@ export class ProgressbarComponent {
 				break;
 		}
 	}
+
+	private getProgressPercentWidth(): number {
+		return $(this.el.nativeElement).find(".progress").width() / $(this.el.nativeElement).width() * 100;
+	}
+
 }

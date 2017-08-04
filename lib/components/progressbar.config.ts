@@ -1,4 +1,4 @@
-export type ProgressValue = "none"| "percent" | "value" | "ng-content";
+export type ProgressValue = "none"| "percent" | "percent-progressive" | "value" | "ng-content";
 
 export class ProgressbarConfig {
 	private max: number = 100;
