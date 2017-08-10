@@ -13,8 +13,8 @@ declare var $: any;
 export class ProgressbarComponent {
 	config: ProgressbarConfig = new ProgressbarConfig();
 
-	private _value: number = 0;
-	private width: number = 0;
+	public _value: number = 0;
+	public width: number = 0;
 
 	@Input() color1: number;
 	@Input() color2: number;
@@ -26,7 +26,7 @@ export class ProgressbarComponent {
 	@HostBinding("class.color2") colorClass2: boolean = false;
 	@HostBinding("class.color3") colorClass3: boolean = false;
 
-	private progressText: string = "";
+	public progressText: string = "";
 
 	constructor(private el: ElementRef, private domSan: DomSanitizer) {
 		this.updateStepSize();
