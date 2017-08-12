@@ -5,31 +5,63 @@ import {ProgressbarConfig} from "./progressbar.config";
 declare var $: any;
 
 @Component({
-	selector: "progressbar",
-	templateUrl: "progressbar.component.html",
+	selector: "progress-container",
+	template: "<ng-content></ng-content>",
 	styleUrls: ["../css/style.css"],
 	encapsulation: ViewEncapsulation.None
+})
+export class ProgressContainerComponent {
+	@HostBinding("style.background-size") backgroundSize: SafeStyle | string = "10%";
+
+	step: number = 25;
+	@Input("step")
+	set setStep(value: number) {
+		this.step = 100 / value;
+		while (this.step < 3) this.step *= 2;
+		this.updateStepSize();
+	}
+
+	@Input("force-step")
+	set forceStep(value: number) {
+		this.step = 100 / value;
+		this.updateStepSize();
+	}
+
+	constructor(private domSan: DomSanitizer) {
+		this.updateStepSize();
+	}
+
+	updateStepSize() {
+		this.backgroundSize = this.domSan.bypassSecurityTrustStyle(`calc(` + this.step + `% + 1px)`);
+	}
+
+}
+
+@Component({
+	selector: "progressbar",
+	templateUrl: "progressbar.component.html",
 })
 export class ProgressbarComponent {
 	config: ProgressbarConfig = new ProgressbarConfig();
 
-	public _value: number = 0;
+	public value: number = 0;
 	public width: number = 0;
 
 	@Input() color1: number;
 	@Input() color2: number;
 	@Input() color3: number;
 
-	@HostBinding("style.background-size") backgroundSize: SafeStyle | string = "10%";
 	@HostBinding("class.default") colorClassDefault: boolean = true;
 	@HostBinding("class.color1") colorClass1: boolean = false;
 	@HostBinding("class.color2") colorClass2: boolean = false;
 	@HostBinding("class.color3") colorClass3: boolean = false;
+	@HostBinding("style.width") get getWidth(): string {
+		return this.width + "%";
+	}
 
 	public progressText: string = "";
 
-	constructor(private el: ElementRef, private domSan: DomSanitizer) {
-		this.updateStepSize();
+	constructor(private el: ElementRef) {
 		this.color1 = 100;
 		this.color2 = 100;
 		this.color3 = 100;
@@ -43,17 +75,16 @@ export class ProgressbarComponent {
 		}
 	}
 
-	@Input()
+	@Input("config")
 	set setConfig(config: ProgressbarConfig) {
-		this.config = config;
+		this.config = config.copy();
 		this.updateWidth();
-		this.updateStepSize();
 		this.updateProgressText();
 	}
 
-	@Input()
-	set value(value: number) {
-		this._value = value;
+	@Input("value")
+	set setValue(value: number) {
+		this.value = value;
 		this.updateColorClass();
 		this.updateWidth();
 	}
@@ -61,7 +92,7 @@ export class ProgressbarComponent {
 	@Input()
 	set max(max: number) {
 		this.config.setMax(max);
-		this.updateStepSize();
+		//this.updateStepSize();
 		this.updateWidth();
 	}
 
@@ -72,9 +103,9 @@ export class ProgressbarComponent {
 	}
 
 	@Input()
-	set step(value: number) {
-		this.config.setStep(value);
-		this.updateStepSize();
+	set hideTextZeroValue(value: boolean) {
+		this.config.setHideTextZeroValue(value);
+		this.updateProgressText();
 	}
 
 	updateColorClass() {
@@ -89,12 +120,8 @@ export class ProgressbarComponent {
 		else this.colorClassDefault = true;
 	}
 
-	updateStepSize() {
-		this.backgroundSize = this.domSan.bypassSecurityTrustStyle(`calc(` + this.config.getStepSize() + `% + 1px)`);
-	}
-
 	updateWidth() {
-		this.width = (this._value / this.config.getMax()) * 100;
+		this.width = (this.value / this.config.getMax()) * 100;
 		this.updateProgressText();
 	}
 
@@ -106,13 +133,13 @@ export class ProgressbarComponent {
 			case "percent-progressive":
 				let i = setInterval(() => {
 					this.progressText = Math.round(this.getProgressPercentWidth()) + "%";
-				}, 50)
+				}, 50);
 				setTimeout(() => {
 					clearInterval(i);
 				}, 2000);
 				break;
 			case "value" :
-				this.progressText = this._value + " / " + this.config.getMax();
+				this.progressText = this.value + " / " + this.config.getMax();
 				break;
 			default :
 				this.progressText = "";
@@ -121,7 +148,13 @@ export class ProgressbarComponent {
 	}
 
 	private getProgressPercentWidth(): number {
-		return $(this.el.nativeElement).find(".progress").width() / $(this.el.nativeElement).width() * 100;
+		return $(this.el.nativeElement).width() / $(this.el.nativeElement.parentNode).width() * 100;
 	}
 
+	isProgressTextDisplayable(): boolean {
+		if (this.config.getProgressType() == 'none') return false;
+		if (this.config.hideTextZeroValue && this.value == 0) return false;
+
+		return true;
+	}
 }

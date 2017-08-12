@@ -1,21 +1,22 @@
-$progressbar-font-size: 15px !default;
+$progress-container-font-size: 15px !default;
 
-progressbar > .progress {
+progress-container > progressbar {
 	background-color: green;
 }
 
-progressbar {
+progress-container {
 	background-color: rgba(0, 0, 0, 0.4);
-	display: block;
+	display: flex;
 	overflow: hidden;
+	position: relative;
 
-	> .progress {
+	> progressbar {
 		transition: all .8s ease;
 		width: 0;
 		white-space: nowrap;
-		min-height: $progressbar-font-size;
-		font-size: $progressbar-font-size;
-		line-height: $progressbar-font-size;
+		min-height: $progress-container-font-size;
+		font-size: $progress-container-font-size;
+		line-height: $progress-container-font-size;
 
 		display: flex;
 		justify-content: center;
@@ -25,18 +26,18 @@ progressbar {
 			// min-width will prevent text when 0% to be cutted on the left
 			min-width: 0;
 		}
-	}
 
-	&.stripped, &.stripped-reverse {
-		> .progress {
-			animation: progressbar 2s linear infinite;
+		&.stripped, &.stripped-reverse {
+			&:not(.no-animate) {
+				animation: progress-container 2s linear infinite;
+			}
 			background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
 			background-size: 40px 40px;
 		}
-	}
 
-	&.stripped-reverse > .progress {
-		animation-direction: reverse;
+		&.stripped-reverse {
+			animation-direction: reverse;
+		}
 	}
 
 	&.stepped {
@@ -45,7 +46,7 @@ progressbar {
 	}
 }
 
-@keyframes progressbar {
+@keyframes progress-container {
 	0% {
 		background-position: 40px 0;
 	}

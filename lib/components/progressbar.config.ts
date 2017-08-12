@@ -1,37 +1,25 @@
 export type ProgressValue = "none"| "percent" | "percent-progressive" | "value" | "ng-content";
 
 export class ProgressbarConfig {
-	private max: number = 100;
-	private step: number = 100;
-	private autoStep: boolean = true;
-	private stepSize: number;
-
+	max: number = 100;
 	progressType: ProgressValue = "none";
+	hideTextZeroValue: boolean = false;
 
-	constructor() {
-		this.refreshStepSize();
+	copy() {
+		let copiedConfig = new ProgressbarConfig();
+		copiedConfig
+			.setMax(this.max)
+			.setProgressType(this.progressType)
+			.setHideTextZeroValue(this.hideTextZeroValue);
+
+		return copiedConfig;
 	}
 
 	setMax(max: number): ProgressbarConfig {
 		this.max = max;
-		if (this.autoStep) this.step = max;
-		this.refreshStepSize();
 		return this;
 	}
 	getMax(): number { return this.max; }
-
-	setStep(step: number): ProgressbarConfig {
-		this.step = step;
-		this.autoStep = false;
-		this.refreshStepSize();
-		return this;
-	}
-	setStepToMax() {
-		this.step = this.max;
-		this.refreshStepSize();
-		this.autoStep = true;
-	}
-	getStep(): number { return this.step; }
 
 	setProgressType(progress: ProgressValue): ProgressbarConfig {
 		this.progressType = progress;
@@ -39,13 +27,9 @@ export class ProgressbarConfig {
 	}
 	getProgressType(): ProgressValue { return this.progressType; }
 
-	private refreshStepSize() {
-		this.stepSize = (100 / this.step);
-		while (this.stepSize < 3) this.stepSize *= 2;
-
+	setHideTextZeroValue(hideTextZeroValue: boolean): ProgressbarConfig {
+		this.hideTextZeroValue = hideTextZeroValue;
+		return this;
 	}
-
-	getStepSize(): number {
-		return this.stepSize;
-	}
+	getHideTextZeroValue(): boolean { return this.hideTextZeroValue; }
 }
