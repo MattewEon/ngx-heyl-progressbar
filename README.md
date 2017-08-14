@@ -79,19 +79,21 @@ CSS classes  for `progressbar`:
        /* background element */
        background-color: rgba(0, 0, 0, 0.4);   
     
-       .progressbar.default  {
-           /* Progress bar when the progress class is default */
-           background-color: green;
-           color: #fff;
-       }
+       > .progressbar {
+          color: #fff;
+          
+          &.default {
+             /* Progress bar when the progress class is default */
+             background-color: green;
+          }
+
+          &.color1 {
+             /* Progress bar when the progress class is color1 */
+             background-color: orange;
+          }    
     
-       .progressbar.color1 {
-           /* Progress bar when the progress class is color1 */
-           background-color: orange;
-           color: #fff;
+          ...
        }
-    
-       ...
     }
  
    ```

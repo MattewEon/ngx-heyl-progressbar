@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostBinding, Input, ViewEncapsulation} from "@angular/core";
+import {Component, ElementRef, HostBinding, Input, ViewEncapsulation, AfterViewInit} from "@angular/core";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 import {ProgressbarConfig} from "./progressbar.config";
 
@@ -41,15 +41,28 @@ export class ProgressContainerComponent {
 	selector: "progressbar",
 	templateUrl: "progressbar.component.html",
 })
-export class ProgressbarComponent {
+export class ProgressbarComponent implements AfterViewInit {
 	config: ProgressbarConfig = new ProgressbarConfig();
 
 	public value: number = 0;
 	public width: number = 0;
 
-	@Input() color1: number;
-	@Input() color2: number;
-	@Input() color3: number;
+	color1: number;
+	color2: number;
+	color3: number;
+
+	@Input("color1") set setColor1(value: number) {
+		this.color1 = value;
+		this.updateColorClass();
+	}
+	@Input("color2") set setColor2(value: number) {
+		this.color2 = value;
+		this.updateColorClass();
+	}
+	@Input("color3") set setColor3(value: number) {
+		this.color3 = value;
+		this.updateColorClass();
+	}
 
 	@HostBinding("class.default") colorClassDefault: boolean = true;
 	@HostBinding("class.color1") colorClass1: boolean = false;
@@ -73,6 +86,12 @@ export class ProgressbarComponent {
 			script.integrity = "sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=";
 			//script.crossOrigin = "anonymous";
 		}
+	}
+
+	ngAfterViewInit() {
+		setTimeout(() => {
+			this.updateColorClass();
+		});
 	}
 
 	@Input("config")
