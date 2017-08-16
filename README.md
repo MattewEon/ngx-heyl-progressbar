@@ -39,6 +39,7 @@ AbstractProgressComponent. All inputs are declared inside this class.
 | Inputs | Default value | Description |
 | -------| --------------| ----------- |
 | `value` | `0` | Value of the progressbar |
+| `roundValue` | `0` | The number of decimal printed when the value is displayed |
 | `max` | `100` | Max value of the progressbar |
 | `progressType` | `"none"` | Define the text displayed inside the progressbar |
 | `Config` | `new ProgressbarConfig()` | Set multiple properties in one property |
@@ -122,16 +123,26 @@ AbstractProgressComponent. All inputs are declared inside this class.
    ```
    
 # 4. `radial-progress` component
-### 4.1 Then use `<progressbar>` component :
+### 4.1 Small wiki :
+
+| Class | Description |
+| -------| ----------- |
+| `*.pre-text` | Add an text before the value displayed |
+| `*.text` | Text displayed if progressType == `ng-content` |
+
+
+### 4.2 Use `<radial-progress>` component :
    
   ```html
    <radial-progress value="5" max="10" progressType="ng-content">
-       50% | 5/10
+       <div class="text">50% | 5/10</div>
    </radial-progress>
-   <radial-progress [value]="'7'" color1="33" color2="66" max="14" progressType="value-progressive"></radial-progress>
+   <radial-progress [value]="'7'" color1="33" color2="66" max="14" progressType="value-progressive">
+      <div class="pre-text">Score :</div>
+   </radial-progress>
   ```
          
-### 4.2 Styling progressbar component
+### 4.3 Styling progressbar component
    
   You can declare the style you want for the progressbar. Here is an example :
   

@@ -7,6 +7,7 @@
 </div>
 
 <div class="text">
+	<ng-content select=".pre-text"></ng-content>
 	{{ progressText }}
-	<ng-content *ngIf="config.progressType == 'ng-content'"></ng-content>
+	<ng-content select=".text" *ngIf="config.progressType == 'ng-content'"></ng-content>
 </div>

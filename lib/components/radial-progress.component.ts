@@ -39,11 +39,13 @@ export class RadialProgressComponent extends AbstractProgressComponent {
 		}
 	}
 
+
 	protected getDisplayedValuePercent(): number {
-		return Math.round(getRotationDegrees($(this.el.nativeElement).find(".half-left")) / 1.8);
+		return getRotationDegrees($(this.el.nativeElement).find(".half-left")) / 1.8;
 	}
 
 	protected getDisplayedValue(): number {
-		return Math.round(this.getDisplayedValuePercent() / 100 * this.config.max);
+		let value = this.getDisplayedValuePercent() / 100 * this.config.max;
+		return parseFloat(value.toFixed(this.roundValue));
 	}
 }

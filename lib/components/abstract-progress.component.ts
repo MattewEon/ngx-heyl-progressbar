@@ -1,6 +1,8 @@
 import {AfterViewInit, Component, HostBinding, Input} from "@angular/core";
 import {ProgressConfig} from "./progress.config";
 
+declare let $: any;
+
 @Component({
 	selector: "",
 	template: ""
@@ -38,27 +40,41 @@ export class AbstractProgressComponent implements AfterViewInit {
 		this.setValue(value);
 	}
 
+	@Input("roundValue")
+	set inputRoundValue(value: number) {
+		this.roundValue = value;
+		this.onSetValue();
+	}
+
 	setValue(value: number) {
 		this.value = value;
-		this.onSetValue();
+		setTimeout(() => {
+			this.onSetValue();
+		});
 	}
 
 	@Input("config")
 	set setConfig(config: ProgressConfig) {
 		this.config = config.copy();
-		this.onSetValue();
+		setTimeout(() => {
+			this.onSetValue();
+		});
 	}
 
 	@Input()
 	set max(max: number) {
 		this.config.setMax(max);
-		this.onSetValue();
+		setTimeout(() => {
+			this.onSetValue();
+		});
 	}
 
 	@Input()
 	set progressType(progresType: string) {
 		this.config.setProgressType(<any>progresType);
-		this.onSetValue();
+		setTimeout(() => {
+			this.onSetValue();
+		});
 	}
 
 	@Input()
@@ -69,6 +85,7 @@ export class AbstractProgressComponent implements AfterViewInit {
 
 
 	value: number = 0;
+	roundValue: number = 0;
 	config: ProgressConfig = new ProgressConfig();
 	public progressText: string = "";
 
@@ -109,6 +126,10 @@ export class AbstractProgressComponent implements AfterViewInit {
 
 	}
 
+	public getValue(): number {
+		return parseFloat(this.value.toFixed(this.roundValue));
+	}
+
 	public getValuePercent(): number {
 		return this.value / this.config.max * 100;
 	}
@@ -127,14 +148,15 @@ export class AbstractProgressComponent implements AfterViewInit {
 				}, 1000);
 				break;
 			case "value" :
-				this.progressText = this.value + " / " + this.config.getMax();
+				this.progressText = this.getValue() + " / " + this.config.getMax();
 				break;
 			case "value-progressive" :
 				let j = setInterval(() => {
 					this.progressText = this.getDisplayedValue() + " / " + this.config.max;
 				}, 50);
 				setTimeout(() => {
-					clearInterval(i);
+					clearInterval(j);
+					this.progressText = this.getValue() + " / " + this.config.max;
 				}, 1000);
 				break;
 			default :

@@ -70,6 +70,7 @@ export class ProgressbarComponent extends AbstractProgressComponent {
 	}
 
 	protected getDisplayedValue(): number {
-		return Math.round(this.getDisplayedValuePercent() / 100 * this.config.max);
+		let value = this.getDisplayedValuePercent() / 100 * this.config.max;
+		return parseFloat(value.toFixed(this.roundValue));
 	}
 }
