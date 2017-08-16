@@ -34,7 +34,7 @@ This package allows you to use a progressbar and a radial-progress element in An
 Know that ProgressbarComponent and RadialProgressComponent has the same super-class :
 AbstractProgressComponent. All inputs are declared inside this class.
 
-Inputs available for `AbstractProgressComponent`:
+### Inputs available for `AbstractProgressComponent`:
 
 | Inputs | Default value | Description |
 | -------| --------------| ----------- |
@@ -46,7 +46,7 @@ Inputs available for `AbstractProgressComponent`:
 | `color2` | `101` | Rate after which the class `.color2` will be set to the progressbar |
 | `color3` | `101` | Rate after which the class `.color3` will be set to the progressbar |
 
-Values of type `ProgressType`:
+### Values of type `ProgressType`:
 
 | Value | Description |
 | -------| ----------- |
@@ -61,20 +61,20 @@ Values of type `ProgressType`:
 # 3. `progressbar` component
 ### 3.1 Small wiki
 
-Inputs available for `progress-container`:
+### Inputs available for `progress-container`:
 
 | Inputs | Default value | Description |
 | -------| --------------| ----------- |
 | `step` | `100` | How many ticks should be displayed when the progressbar has the class ".stepped". Step value will be *2 until it's > 3% |
 | `force-step` | `step` | How many ticks should be displayed when the progressbar has the class ".stepped". |
 
-CSS classes for `progress-container`:
+### CSS classes for `progress-container`:
 
 | Class | Description |
 | -------| ----------- |
 | `.stepped` | Prints a tick every step |
 
-CSS classes  for `progressbar`:
+### CSS classes  for `progressbar`:
 
 | Class | Description |
 | -------| ----------- |
