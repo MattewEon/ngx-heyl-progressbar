@@ -4,5 +4,6 @@
 
 #Dev files
 node_modules
+README_files
 npm-debug.log.*
 tsconfig.json

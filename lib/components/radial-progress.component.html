@@ -1,0 +1,12 @@
+<div class="half-right">
+	<div class="fill" [style.transform]="transform1"></div>
+	<div class="fill" [style.transform]="transform2"></div>
+</div>
+<div class="half-left" [style.transform]="transform1" [class.rotated]="halfLeftVisible">
+	<div class="fill" [style.transform]="transform1"></div>
+</div>
+
+<div class="text">
+	{{ progressText }}
+	<ng-content *ngIf="false"></ng-content>
+</div>

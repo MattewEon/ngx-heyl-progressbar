@@ -1,9 +1,65 @@
 # ngx-heyl-progressbar
 
-This package allows you to use a progressbar element in AngularX (2+) projects.
+This package allows you to use a progressbar and a radial-progress element in AngularX (2+) projects.
 #### Please don't hesitate to ask for new features or report a bug on Github! Thanks
 
-## Small wiki
+### `progressbar` component example :
+![progressbar example](README_files/progressbar.png)
+
+### `radial-progress` component example :
+![radial-progress example](README_files/radial-progress.png)
+
+# 1. Installation
+
+#### 1.1 Install npm module : 
+
+   `npm install ngx-heyl-progressbar`
+
+#### 1.2 Import the module :
+
+   Open your `app.module.ts` file and import the module like this :
+   
+   ```typescript
+   import { ProgressbarModule } from "ngx-heyl-progressbar";
+   @NgModule({
+      imports: [ 
+         ...,
+         ProgressbarModule
+      ]
+   })
+   ```
+
+# 2. Small wiki
+
+Know that ProgressbarComponent and RadialProgressComponent has the same super-class :
+AbstractProgressComponent. All inputs are declared inside this class.
+
+Inputs available for `AbstractProgressComponent`:
+
+| Inputs | Default value | Description |
+| -------| --------------| ----------- |
+| `value` | `0` | Value of the progressbar |
+| `max` | `100` | Max value of the progressbar |
+| `progressType` | `"none"` | Define the text displayed inside the progressbar |
+| `Config` | `new ProgressbarConfig()` | Set multiple properties in one property |
+| `color1` | `101` | Rate after which the class `.color1` will be set to the progressbar |
+| `color2` | `101` | Rate after which the class `.color2` will be set to the progressbar |
+| `color3` | `101` | Rate after which the class `.color3` will be set to the progressbar |
+
+Values of type `ProgressType`:
+
+| Value | Description |
+| -------| ----------- |
+| `none` | Don't display any value |
+| `percent` | Display a the percent value (40%) |
+| `percent-progressive` | Display the percent value with text animation from current-percent-value to new-percent-value |
+| `value` | Display a the percent value (40 / 100) |
+| `value-progressive` | Display the value with text animation from current-value to new-value |
+| `ng-content` | Display the ng-content |
+
+
+# 3. `progressbar` component
+### 3.1 Small wiki
 
 Inputs available for `progress-container`:
 
@@ -11,18 +67,6 @@ Inputs available for `progress-container`:
 | -------| --------------| ----------- |
 | `step` | `100` | How many ticks should be displayed when the progressbar has the class ".stepped". Step value will be *2 until it's > 3% |
 | `force-step` | `step` | How many ticks should be displayed when the progressbar has the class ".stepped". |
-
-Inputs available for `progressbar`:
-
-| Inputs | Default value | Description |
-| -------| --------------| ----------- |
-| `value` | `0` | Value of the progressbar |
-| `max` | `100` | Max value of the progressbar |
-| `progressType` | `"none"` | Define the text displayed inside the progressbar. Can be `"none"`, `"percent"` (3%), `"value"` (3) or `"ng-content"` |
-| `Config` | `new ProgressbarConfig()` | Set multiple properties in one property |
-| `color1` | `101` | Rate after which the class `.color1` will be set to the progressbar |
-| `color2` | `101` | Rate after which the class `.color2` will be set to the progressbar |
-| `color3` | `101` | Rate after which the class `.color3` will be set to the progressbar |
 
 CSS classes for `progress-container`:
 
@@ -38,27 +82,7 @@ CSS classes  for `progressbar`:
 | `.no-animate` | Keep the background from `.stripped` or `.stripped-reverse`, without any move |
 | `.stripped-reverse` | Add an animated background on the .progress element moving on the other side |
 
-## Installation
-
-1. Install npm module : 
-
-   `npm install ngx-heyl-progressbar`
-
-2. Import the module :
-
-   Open your `app.module.ts` file and import the module like this :
-   
-   ```typescript
-   import { ProgressbarModule } from "ngx-heyl-progressbar";
-   @NgModule({
-      imports: [ 
-         ...,
-         ProgressbarModule
-      ]
-   })
-   ```
- 
-3. Then use `<progressbar>` component :
+### 3.2 Then use `<progressbar>` component :
 
    ```html
    <progress-container>
@@ -70,7 +94,7 @@ CSS classes  for `progressbar`:
    </progress-container>
    ```
       
-4. Styling progressbar component
+### 3.3 Styling progressbar component
 
    You can declare the style you want for the progressbar. Here is an example :
    
@@ -95,5 +119,34 @@ CSS classes  for `progressbar`:
           ...
        }
     }
- 
    ```
+   
+# 4. `radial-progress` component
+### 4.1 Then use `<progressbar>` component :
+   
+  ```html
+   <radial-progress value="5" max="10" progressType="ng-content">
+       50% | 5/10
+   </radial-progress>
+   <radial-progress [value]="'7'" color1="33" color2="66" max="14" progressType="value-progressive"></radial-progress>
+  ```
+         
+### 4.2 Styling progressbar component
+   
+  You can declare the style you want for the progressbar. Here is an example :
+  
+  ```scss
+   radial-progress {
+     &.default .fill {
+        /* Progress when the progress class is default */
+        background-color: green;
+     }
+
+     &.color1 .fill {
+        /* Progress when the progress class is color1 */
+        background-color: orange;
+     }    
+
+     ...
+   }
+  ```

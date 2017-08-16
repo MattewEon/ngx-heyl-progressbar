@@ -1,0 +1,68 @@
+radial-progress {
+	width: 120px;
+	height: 120px;
+
+	position: relative;
+	overflow: hidden;
+	z-index: 0;
+
+	> .half-right, > .half-left {
+		$transition: all 1s;
+		transition: $transition;
+
+		// Zoom to prevent non-squared & non-circle forms like ovals and rectangle
+		height: 200%;
+		width: 200%;
+		top: -50%;
+
+		position: absolute;
+		overflow: hidden;
+		left: 50%;
+		z-index: -1;
+
+		transform-origin: 0 50%;
+		transform: rotate(0deg);
+
+		> .fill {
+			transition: $transition;
+
+			// Zoom to prevent non-squared & non-circle forms like ovals and rectangle
+			height: 200%;
+			width: 200%;
+			top: -50%;
+
+			right: 100%;
+			position: absolute;
+			transform-origin: 100% 50%;
+		}
+	}
+
+	.text {
+		border-radius: inherit;
+		height: 100%;
+		width: 100%;
+		background: #fff;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.half-left.rotated {
+		overflow: initial;
+	}
+}
+
+radial-progress {
+	background-color: rgba(255, 255, 255, 0.4);
+	border-radius: 50%;
+	padding: 5px;
+
+	.fill {
+		background-color: rebeccapurple;
+	}
+
+	.text {
+		background: rgba(0, 0, 0, 0.7);
+	}
+}

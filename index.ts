@@ -1,6 +1,7 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ProgressbarComponent, ProgressContainerComponent} from "./lib/components/progressbar.component";
+import {RadialProgressComponent} from "./lib/components/radial-progress.component";
 
 @NgModule({
 	imports: [
@@ -8,11 +9,13 @@ import {ProgressbarComponent, ProgressContainerComponent} from "./lib/components
 	],
 	declarations: [
 		ProgressContainerComponent,
-		ProgressbarComponent
+		ProgressbarComponent,
+		RadialProgressComponent
 	],
 	exports: [
 		ProgressContainerComponent,
-		ProgressbarComponent
+		ProgressbarComponent,
+		RadialProgressComponent
 	]
 })
 export class ProgressbarModule {
