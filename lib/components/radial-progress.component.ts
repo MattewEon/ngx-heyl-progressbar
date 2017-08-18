@@ -25,8 +25,8 @@ export class RadialProgressComponent extends AbstractProgressComponent {
 
 	onSetValue() {
 		this.halfLeftVisible = false;
-		this.transform1 = "rotate(" + this.getValuePercent() * 1.8 + "deg)";
-		this.transform2 = "rotate(" + this.getValuePercent() * 3.6 + "deg)";
+		this.transform1 = "rotate(" + this.getValueRotate() * 1.8 + "deg)";
+		this.transform2 = "rotate(" + this.getValueRotate() * 3.6 + "deg)";
 		this.updateColorClass();
 		this.updateProgressText();
 		clearTimeout(this.timeoutChromeFix);
@@ -37,6 +37,12 @@ export class RadialProgressComponent extends AbstractProgressComponent {
 				this.halfLeftVisible = true;
 			}, 900);
 		}
+	}
+
+	private getValueRotate(): number {
+		let res = this.getValuePercent();
+		if (res < 0) res *= -1;
+		return res % 100;
 	}
 
 

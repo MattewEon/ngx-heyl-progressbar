@@ -7,34 +7,42 @@ radial-progress {
 	overflow: hidden;
 	z-index: 0;
 
-	> .half-right, > .half-left {
-		$transition: all 1s;
-		transition: $transition;
-
-		// Zoom to prevent non-squared & non-circle forms like ovals and rectangle
-		height: 200%;
-		width: 200%;
-		top: -50%;
-
+	div.halfs {
+		width: 100%;
+		height: 100%;
 		position: absolute;
-		overflow: hidden;
-		left: 50%;
 		z-index: -1;
 
-		transform-origin: 0 50%;
-		transform: rotate(0deg);
+		&.negative {
+			transform: rotateY(180deg);
+		}
 
-		> .fill {
+		> .half-right, > .half-left {
+			$transition: all 1s;
 			transition: $transition;
 
 			// Zoom to prevent non-squared & non-circle forms like ovals and rectangle
 			height: 200%;
 			width: 200%;
 			top: -50%;
-
-			right: 100%;
 			position: absolute;
-			transform-origin: 100% 50%;
+			overflow: hidden;
+			left: 50%;
+			z-index: -1;
+			transform-origin: 0 50%;
+			transform: rotate(0deg);
+
+			> .fill {
+				transition: $transition;
+
+				// Zoom to prevent non-squared & non-circle forms like ovals and rectangle
+				height: 200%;
+				width: 200%;
+				top: -50%;
+				right: 100%;
+				position: absolute;
+				transform-origin: 100% 50%;
+			}
 		}
 	}
 
@@ -64,8 +72,9 @@ radial-progress {
 
 radial-progress {
 	background-color: rgba(255, 255, 255, 0.4);
-	border-radius: 50%;
 	padding: 5px;
+
+	&:not(.squared) { border-radius: 50%; }
 
 	.fill {
 		background-color: rebeccapurple;

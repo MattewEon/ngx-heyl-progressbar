@@ -9,13 +9,29 @@ This package allows you to use a progressbar and a radial-progress element in An
 ### `radial-progress` component example :
 ![radial-progress example](README_files/radial-progress.png)
 
-# 1. Installation
+# 1. Features :
 
-#### 1.1 Install npm module : 
+- Progress bars
+    - Multiple bars on the same container
+    - Bootstrap's stripped skin
+    - Steps visible with a vertical line
+- Radial progress (v3)
+    - Negative values handled (v3.2)
+    - Can have a squared form (v3.2)
+    - ng-content with selector (v3.1)
+- Global
+    - CSS transition on value change
+    - CSS classes depending of the value (`default`, `color[1-3]`)
+    - Multiple way to display values ([see `ProgressType`](#progresstype))
+    - Text transition on value change (if change from 10 to 15, number will increase progressively)
+
+# 2. Installation :
+
+#### 2.1 Install npm module : 
 
    `npm install ngx-heyl-progressbar`
 
-#### 1.2 Import the module :
+#### 2.2 Import the module :
 
    Open your `app.module.ts` file and import the module like this :
    
@@ -29,12 +45,12 @@ This package allows you to use a progressbar and a radial-progress element in An
    })
    ```
 
-# 2. Small wiki
+# 3. Small wiki
 
 Know that ProgressbarComponent and RadialProgressComponent has the same super-class :
 AbstractProgressComponent. All inputs are declared inside this class.
 
-### Inputs available for `AbstractProgressComponent`:
+### 3.1. Inputs available for `AbstractProgressComponent`:
 
 | Inputs | Default value | Description |
 | -------| --------------| ----------- |
@@ -47,7 +63,7 @@ AbstractProgressComponent. All inputs are declared inside this class.
 | `color2` | `101` | Rate after which the class `.color2` will be set to the progressbar |
 | `color3` | `101` | Rate after which the class `.color3` will be set to the progressbar |
 
-### Values of type `ProgressType`:
+### 3.2. <a name="progresstype"></a> Values of type `ProgressType`:
 
 | Value | Description |
 | -------| ----------- |
@@ -59,8 +75,8 @@ AbstractProgressComponent. All inputs are declared inside this class.
 | `ng-content` | Display the ng-content |
 
 
-# 3. `progressbar` component
-### 3.1 Small wiki
+# 4. `progressbar` component
+## 4.1. Small wiki
 
 ### Inputs available for `progress-container`:
 
@@ -83,7 +99,7 @@ AbstractProgressComponent. All inputs are declared inside this class.
 | `.no-animate` | Keep the background from `.stripped` or `.stripped-reverse`, without any move |
 | `.stripped-reverse` | Add an animated background on the .progress element moving on the other side |
 
-### 3.2 Then use `<progressbar>` component :
+### 4.2. Then use `<progressbar>` component :
 
    ```html
    <progress-container>
@@ -95,7 +111,7 @@ AbstractProgressComponent. All inputs are declared inside this class.
    </progress-container>
    ```
       
-### 3.3 Styling progressbar component
+### 4.3. Styling progressbar component
 
    You can declare the style you want for the progressbar. Here is an example :
    
@@ -122,16 +138,24 @@ AbstractProgressComponent. All inputs are declared inside this class.
     }
    ```
    
-# 4. `radial-progress` component
-### 4.1 Small wiki :
+# 5. `radial-progress` component
+### 5.1. Small wiki :
+
+#### CSS classes for `radial-progress`
 
 | Class | Description |
 | -------| ----------- |
-| `*.pre-text` | Add an text before the value displayed |
-| `*.text` | Text displayed if progressType == `ng-content` |
+| `.squared` | Remove the border-radius on the element |
+
+#### `ng-content` targets
+
+| ng-content Select | Description |
+| -------| ----------- |
+| `.pre-text` | Add an text before the value displayed |
+| `.text` | Text displayed if progressType == `ng-content` |
 
 
-### 4.2 Use `<radial-progress>` component :
+### 5.2. Use `<radial-progress>` component :
    
   ```html
    <radial-progress value="5" max="10" progressType="ng-content">
@@ -142,7 +166,7 @@ AbstractProgressComponent. All inputs are declared inside this class.
    </radial-progress>
   ```
          
-### 4.3 Styling progressbar component
+### 5.3. Styling progressbar component
    
   You can declare the style you want for the progressbar. Here is an example :
   
