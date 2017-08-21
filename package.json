@@ -1,6 +1,6 @@
 {
   "name": "ngx-heyl-progressbar",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "A simple Angular2+ progressbar",
   "main": "index.ts",
   "scripts": {
