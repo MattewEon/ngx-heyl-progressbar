@@ -30,7 +30,7 @@ progress-container {
 			background-size: 40px 40px;
 		}
 
-		&.stripped-reverse &:not(.no-animate) { animation-direction: reverse; }
+		&.stripped-reverse:not(.no-animate) { animation-direction: reverse; }
 	}
 
 	&.stepped {
