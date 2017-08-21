@@ -1,8 +1,6 @@
 $progress-container-font-size: 15px !default;
 
-progress-container > progressbar {
-	background-color: green;
-}
+progress-container > progressbar { background-color: green; }
 
 progress-container {
 	background-color: rgba(0, 0, 0, 0.4);
@@ -17,7 +15,6 @@ progress-container {
 		min-height: $progress-container-font-size;
 		font-size: $progress-container-font-size;
 		line-height: $progress-container-font-size;
-
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -28,16 +25,12 @@ progress-container {
 		}
 
 		&.stripped, &.stripped-reverse {
-			&:not(.no-animate) {
-				animation: progress-container 2s linear infinite;
-			}
+			&:not(.no-animate) { animation: progress-container 2s linear infinite; }
 			background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
 			background-size: 40px 40px;
 		}
 
-		&.stripped-reverse {
-			animation-direction: reverse;
-		}
+		&.stripped-reverse &:not(.no-animate) { animation-direction: reverse; }
 	}
 
 	&.stepped {
@@ -47,10 +40,6 @@ progress-container {
 }
 
 @keyframes progress-container {
-	0% {
-		background-position: 40px 0;
-	}
-	100% {
-		background-position: 0 0;
-	}
+	0% { background-position: 40px 0; }
+	100% { background-position: 0 0; }
 }
