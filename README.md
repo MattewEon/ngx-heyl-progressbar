@@ -1,7 +1,9 @@
 # ngx-heyl-progressbar
 
 This package allows you to use a progressbar and a radial-progress element in AngularX (2+) projects.
-#### Please don't hesitate to ask for new features or report a bug on Github! Thanks
+##### Please don't hesitate to ask for new features or report a bug on Github! Thanks
+
+#### You can see a [Live example here](https://MattewEon.github.io/ngx-heyl-progressbar)
 
 ### `progressbar` component example :
 ![progressbar example](README_files/progressbar.png)
@@ -107,7 +109,7 @@ AbstractProgressComponent. All inputs are declared inside this class.
    </progress-container>
    <progress-container class="stepped" [step]="'10'">
        <progressbar [value]="'20'" class="stripped"></progressbar>
-       <progressbar [value]="'50'" class="class=stripped-reverse""></progressbar>
+       <progressbar [value]="'50'" class="stripped-reverse"></progressbar>
    </progress-container>
    ```
       

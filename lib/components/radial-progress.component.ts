@@ -41,9 +41,12 @@ export class RadialProgressComponent extends AbstractProgressComponent {
 
 	private getValueRotate(): number {
 		let res = this.getValuePercent();
+		if (res == 0) return 0;
+
 		if (res < 0) res *= -1;
 		res = res % 100;
 		if (res == 0) res = 100;
+
 		return res;
 	}
 
