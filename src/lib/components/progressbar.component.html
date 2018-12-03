@@ -1,0 +1,4 @@
+<div *ngIf="isProgressTextDisplayable()">
+	{{ progressText }}
+	<ng-content *ngIf="config.getProgressType() == 'ng-content'"></ng-content>
+</div>
